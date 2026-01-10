@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import voice, voice_v2
+from app.routers import voice_v2
 import os
 from pathlib import Path
 
@@ -24,7 +24,7 @@ app.add_middleware(
 )
 
 # Include routers
-app.include_router(voice.router, prefix="/api/v1", tags=["voice"])
+# app.include_router(voice.router, prefix="/api/v1", tags=["voice"])
 app.include_router(voice_v2.router, prefix="/api/v2", tags=["voice-v2"])
 
 @app.get("/")
