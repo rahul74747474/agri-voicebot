@@ -36,7 +36,8 @@ async def process_voice(
         
         # Step 1: Speech to Text (Whisper)
         print(f"[1/3] Transcribing audio in language: {language}")
-        transcription = await transcribe_audio(str(input_path), language)
+        transcription_result = await transcribe_audio(str(input_path), language)
+        transcription = transcription_result["text"]
         print(f"Transcription: {transcription}")
         
         # Step 2: Get LLM response (Qwen)
@@ -83,7 +84,8 @@ async def transcribe_only(
         with input_path.open("wb") as buffer:
             shutil.copyfileobj(audio.file, buffer)
         
-        transcription = await transcribe_audio(str(input_path), language)
+        transcription_result = await transcribe_audio(str(input_path), language)
+        transcription = transcription_result["text"]
         
         input_path.unlink()
         

@@ -59,4 +59,4 @@ Important:
         return response['message']['content']
         
     except Exception as e:
-        raise Exception(f"LLM error: {str(e)}")
+        raise Exception(f"LLM error: {str(e)}")  

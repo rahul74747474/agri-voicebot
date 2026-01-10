@@ -13,7 +13,7 @@ print(f"Loading Whisper model: {WHISPER_MODEL_NAME} on {device}")
 whisper_model = whisper.load_model(WHISPER_MODEL_NAME, device=device)
 print("Whisper model loaded successfully")
 
-async def transcribe_audio(audio_path: str, language: str = None) -> str:
+async def transcribe_audio(audio_path: str, language: str = None) -> dict:
     '''
     Transcribe audio file to text using Whisper
     
@@ -46,7 +46,10 @@ async def transcribe_audio(audio_path: str, language: str = None) -> str:
             fp16=torch.cuda.is_available()
         )
         
-        return result["text"].strip()
+        return {
+            "text": result["text"].strip(),
+            "language": result["language"]
+        }
         
     except Exception as e:
         raise Exception(f"Transcription error: {str(e)}")
