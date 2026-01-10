@@ -30,10 +30,10 @@ async def text_to_speech_elevenlabs(text: str) -> str:
         output_path = TEMP_DIR / f"eleven_{timestamp}.mp3"
         
         # Audio generation
-        # Using a multilingual model and Rachel voice (JBFqnCBsd6RMkjVDRZzb)
+        # Using a multilingual model and "Rachel" voice
         audio_generator = client.text_to_speech.convert(
             text=text,
-            voice_id="JBFqnCBsd6RMkjVDRZzb", # Rachel
+            voice_id="JBFqnCBsd6RMkjVDRZzb", 
             model_id="eleven_multilingual_v2"
         )
         

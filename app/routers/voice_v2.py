@@ -30,20 +30,20 @@ async def process_voice_v2(
             shutil.copyfileobj(audio.file, buffer)
         
         # Step 1: Speech to Text (Whisper) - Auto-detect language
-        print(f"[V2] [1/3] Transcribing audio...")
+        print(f"Processing audio: Transcribing with Whisper...")
         transcription_result = await transcribe_audio(str(input_path))
         transcription = transcription_result["text"]
         detected_language = transcription_result.get("language", "hi")
         
-        print(f"[V2] Transcription: {transcription} (Lang: {detected_language})")
+        print(f"Transcription complete: {transcription[:50]}... (Lang: {detected_language})")
         
         # Step 2: Get LLM response (Gemini)
-        print(f"[V2] [2/3] Getting Gemini response...")
+        print(f"Querying Gemini (Model: Flash 2.5/1.5)...")
         response_text = await get_gemini_response(transcription, detected_language)
-        print(f"[V2] Response: {response_text}")
+        print(f"Gemini Response: {response_text[:50]}...")
         
         # Step 3: Text to Speech (Eleven Labs)
-        print(f"[V2] [3/3] Converting to speech (Eleven Labs)...")
+        print(f"Generating Speech with Eleven Labs...")
         output_audio_path = await text_to_speech_elevenlabs(response_text)
         
         # Cleanup input file
