@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Load Whisper model once at startup
-WHISPER_MODEL_NAME = os.getenv("WHISPER_MODEL", "base")
+WHISPER_MODEL_NAME = os.getenv("WHISPER_MODEL", "tiny")
 
 # 🔒 Render Free: Always CPU
 device = "cpu"
