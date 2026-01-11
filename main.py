@@ -1,6 +1,7 @@
-def main():
-    print("Hello from kisan-voice-bot!")
+from google import genai
+import os
 
+client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
-if __name__ == "__main__":
-    main()
+for m in client.models.list():
+    print(m.name)
