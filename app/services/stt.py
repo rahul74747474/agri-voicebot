@@ -7,7 +7,9 @@ load_dotenv()
 
 # Load Whisper model once at startup
 WHISPER_MODEL_NAME = os.getenv("WHISPER_MODEL", "base")
-device = "cuda" if torch.cuda.is_available() else "cpu"
+
+# 🔒 Render Free: Always CPU
+device = "cpu"
 
 print(f"🎙️ [STT] Loading Whisper model: {WHISPER_MODEL_NAME} on {device}")
 whisper_model = whisper.load_model(WHISPER_MODEL_NAME, device=device)
@@ -23,15 +25,15 @@ async def transcribe_audio(audio_path: str, language: str = None) -> dict:
 
         # Map language codes to Whisper format
         language_map = {
-            "hi": "hi",  # Hindi
-            "ta": "ta",  # Tamil
-            "te": "te",  # Telugu
-            "bn": "bn",  # Bengali
-            "mr": "mr",  # Marathi
-            "gu": "gu",  # Gujarati
-            "pa": "pa",  # Punjabi
-            "kn": "kn",  # Kannada
-            "ml": "ml",  # Malayalam
+            "hi": "hi",
+            "ta": "ta",
+            "te": "te",
+            "bn": "bn",
+            "mr": "mr",
+            "gu": "gu",
+            "pa": "pa",
+            "kn": "kn",
+            "ml": "ml",
         }
 
         whisper_lang = language_map.get(language, language) if language else None
@@ -41,11 +43,11 @@ async def transcribe_audio(audio_path: str, language: str = None) -> dict:
         else:
             print("🌍 [STT] Auto language detection enabled")
 
-        # Transcribe
+        # Transcribe (CPU safe)
         result = whisper_model.transcribe(
             audio_path,
             language=whisper_lang,
-            fp16=torch.cuda.is_available()
+            fp16=False
         )
 
         text = result["text"].strip()
